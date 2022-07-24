@@ -39,22 +39,29 @@ fn make_unit_list(cols: &str, rows: &str) -> Vec<Vec<String>> {
     unit_list
 }
 
-fn eliminate() {
+fn eliminate(values: &CHashMap<String, BitSet>, s: &str, d: u8) -> bool {
     todo!("Implement me");
 }
 
 fn assign(values: &CHashMap<String, BitSet>, s: &str, d: &BitSet) {
-
+    let mut s_set = values.get_mut(s).unwrap();
+    s_set.difference_with(d); //let other_values= 
+    s_set.iter().par_bridge().all(|n| eliminate(values, &s, n as u8) );
+    // println!("{:?}", values.get_mut(s).unwrap());
     todo!("Implement me");
 }
 
-fn parse_grid(squares: &Vec<String>, board: &str) -> CHashMap<String, BitSet> {
+fn parse_board(squares: &Vec<String>, board: &str) -> CHashMap<String, BitSet> {
     let values: CHashMap<String, BitSet> = CHashMap::new();
     squares.par_iter().for_each(|sq|{
             values.insert(sq.clone(), BitSet::from_iter((0..=9).into_iter()));
         }
     );
     let default = board_values(squares, board).into_iter().collect::<Vec<(String, BitSet)>>();
+
+    // values.get_mut("A1").unwrap().difference_with(&BitSet::from_bytes(&[5])); //let other_values= 
+    //     println!("{:?}", values.get_mut("A1")); //.unwrap().into_iter().collect::<Vec<usize>>()
+
     default.par_iter().for_each(|(s, d)|assign(&values, s, d));
     todo!("Implement me");
 }
@@ -82,7 +89,7 @@ pub fn solve(board: &str) -> Vec<String> {
     let rows = String::from("ABCDEFGHI");
     let squares = cross(&rows, &digits);
     let unit_list = make_unit_list(&digits, &rows);
-    board_values(&squares, board);
+    parse_board(&squares, board);
     // println!("{:?}", unit_list);
 
 
