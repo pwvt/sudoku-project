@@ -1,5 +1,7 @@
 use rayon::{iter::*, str::ParallelString};
 use rayon::prelude::*;
+use bit_set::BitSet;
+use chashmap::CHashMap;
 
 fn cross(A: &str, B: &str) -> Vec<String> {
     A.par_chars()
@@ -35,13 +37,23 @@ fn make_unit_list(cols: &str, rows: &str) -> Vec<Vec<String>> {
     unit_list
 }
 
+fn parse_grid(squares: &Vec<String>, board: &str) {
+    let values: CHashMap<String, BitSet> = CHashMap::new();
+    // BitSet::from_iter((0..=9).into_iter());
+    squares.par_iter().for_each(|&sq|{
+            values.insert(sq, BitSet::from_iter((0..=9).into_iter()));
+        }
+    );
+    todo!("Implement me");
+}
+
 pub fn solve(board: &str) -> Vec<String> {
     let digits = String::from("123456789");
     let rows = String::from("ABCDEFGHI");
     let squares = cross(&rows, &digits);
     let mut unit_list = make_unit_list(&digits, &rows);
     
-    println!("{:?}", unit_list);
+    // println!("{:?}", unit_list);
 
 
     todo!("Implement me");
