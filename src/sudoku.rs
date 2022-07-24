@@ -10,9 +10,24 @@ fn cross(A: &str, B: &str) -> Vec<String> {
         .collect::<Vec<String>>()
 }
 
-// digits   = "123456789";
-// rows     = "ABCDEFGHI";
-
 pub fn solve(board: &str) -> Vec<String> {
+    let cols = String::from("123456789");
+    let rows = String::from("ABCDEFGHI");
+    let squares = cross(&rows, &cols);
+    // println!("{:?}", squares);
+    let mut unit_list: Vec<Vec<String>> = vec![];
+    let temp = cols.par_chars().map(|c| cross(&rows, &c.to_string())).collect::<Vec<Vec<String>>>().into_iter();
+    unit_list.extend(
+        cols.par_chars()
+            .map(|c| cross(&rows, &c.to_string()))
+            .collect::<Vec<Vec<String>>>()
+            .into_iter()
+        );
+    
+    // unitlist = ([cross(rows, c) for c in cols] +
+    //         [cross(r, cols) for r in rows] +
+    //         [cross(rs, cs) for rs in ('ABC','DEF','GHI') for cs in ('123','456','789')])
+
+
     todo!("Implement me");
 }

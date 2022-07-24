@@ -1,5 +1,5 @@
 mod sudoku;
 
 fn main() {
-    println!("Hello, world!");
+    sudoku::solve(&"");
 }
