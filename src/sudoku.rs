@@ -11,10 +11,7 @@ fn cross(A: &str, B: &str) -> Vec<String> {
         .collect::<Vec<String>>()
 }
 
-pub fn solve(board: &str) -> Vec<String> {
-    let cols = String::from("123456789");
-    let rows = String::from("ABCDEFGHI");
-    let squares = cross(&rows, &cols);
+fn make_unit_list(cols: &str, rows: &str) -> Vec<Vec<String>> {
     let mut unit_list: Vec<Vec<String>> = vec![];
     unit_list.extend(
         cols.par_chars()
@@ -35,8 +32,16 @@ pub fn solve(board: &str) -> Vec<String> {
                 )
             .collect::<Vec<Vec<String>>>()
     );
+    unit_list
+}
+
+pub fn solve(board: &str) -> Vec<String> {
+    let digits = String::from("123456789");
+    let rows = String::from("ABCDEFGHI");
+    let squares = cross(&rows, &digits);
+    let mut unit_list = make_unit_list(&digits, &rows);
     
-    // println!("{:?}", unit_list);
+    println!("{:?}", unit_list);
 
 
     todo!("Implement me");
